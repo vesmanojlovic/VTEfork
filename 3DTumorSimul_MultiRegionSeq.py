@@ -33,24 +33,27 @@ def createLattice(d):
                 lattice[(x,y,z)] = deme()
     return lattice
 
-def neighbor26((a,b,c)):
+def neighbor26(pos):
     """
     Moore neighbourhood: 26 neighbour sites of (a,b,c).
     """
+    a, b, c = pos
     neighbor = [(a-1, b-1, c-1),(a-1, b-1, c),(a-1, b-1, c+1),(a-1, b, c-1),(a-1, b, c),(a-1, b, c+1),(a-1, b+1, c-1),(a-1, b+1, c),(a-1, b+1, c+1),(a, b-1, c-1),(a, b-1, c),(a, b-1, c+1),(a, b, c-1),(a, b, c+1),(a, b+1, c-1),(a, b+1, c),(a, b+1, c+1),(a+1, b-1, c-1),(a+1, b-1, c),(a+1, b-1, c+1),(a+1, b, c-1),(a+1, b, c),(a+1, b, c+1),(a+1, b+1, c-1),(a+1, b+1, c),(a+1, b+1, c+1)]
     return neighbor
 
-def neighbor6((a,b,c)):
+def neighbor6(pos):
     """
     von Neumann neighbourhood: 6 neighbour sites of (a,b,c).
     """
+    a, b, c = pos
     neighbor = [(a-1, b, c),(a+1, b, c),(a, b-1, c),(a, b+1, c),(a, b, c-1),(a, b, c+1)]
     return neighbor
 
-def localNeighbor((a,b,c),r):
+def localNeighbor(pos,r):
     """
     A function to search the local neighbour sites of (a,b,c) within an area of radius r in the 3D cubic lattice.
     """
+    a, b, c = pos
     neighbor = []
     for x in range(-r,r+1):
         for y in range(-r,r+1):
@@ -279,7 +282,7 @@ def highMuts(sp,position,mlineage,cutoff):
     return highAF_muts
 
 
-def pubMutGenerator(n,size_par,mean_depth,purity):
+def pubMutGenerator(n,size_par,mean_depth,purity=1):
     """
     A function to generate the public clonal mutations occured during the multi-step tumorigenesis before transformation.
     
@@ -514,7 +517,7 @@ tissue5 = bulkTissueSampling(space,sample8[4],3)
 tissue6 = bulkTissueSampling(space,sample8[5],3)
 tissue7 = bulkTissueSampling(space,sample8[6],3)
 tissue8 = bulkTissueSampling(space,sample8[7],3)
-print "Average # of demes in the 8 bulks",(len(tissue1)+len(tissue2)+len(tissue3)+len(tissue4)+len(tissue5)+len(tissue6)+len(tissue7)+len(tissue8))/8
+print("Average # of demes in the 8 bulks",(len(tissue1)+len(tissue2)+len(tissue3)+len(tissue4)+len(tissue5)+len(tissue6)+len(tissue7)+len(tissue8))/8)
 
 maf1 = seqProcessing(space,tissue1,mutlineage,2,seq_depth,1)
 maf2 = seqProcessing(space,tissue2,mutlineage,2,seq_depth,1)
